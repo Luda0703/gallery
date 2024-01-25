@@ -1,6 +1,6 @@
 import { Photo } from "./types";
 
-import style from './index.module.scss'
+import style from './index.module.scss';
 import { useState } from "react";
 import { MainPhoto } from "./MainPhoto";
 import { PreviewGallery } from "./PreviewGallery";
@@ -33,7 +33,7 @@ export const WebGallery: React.FC<WebGalleryProps> = ({
                 className={style.webelartMainPhoto}
                 />
                 <Navigation
-                className={style.webelartNavigation}
+                className={style.webelartGalleryNavigation}
                 disabledPrev={!prevPhoto}
                 disabledNext={!nextPhoto}
                 onPrevClick={() => {
@@ -47,7 +47,7 @@ export const WebGallery: React.FC<WebGalleryProps> = ({
             <PreviewGallery
             activePhotoIndex={indexActivePhoto}
             photos={photos}
-            className={style.webelartPreviewList}
+            className={style.webelartGalleryPreviewList}
 
             />
         </div>

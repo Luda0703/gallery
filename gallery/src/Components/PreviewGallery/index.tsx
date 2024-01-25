@@ -1,4 +1,9 @@
+import cl from "classnames";
+import { useEffect, useMemo, useRef } from "react";
+
 import { Photo, CommonClassProps } from "../types";
+import style from "./index.module.scss";
+
 
 interface PreviewGalleryProps extends CommonClassProps {
     activePhotoIndex: number;
@@ -6,7 +11,47 @@ interface PreviewGalleryProps extends CommonClassProps {
 }
 
 export const PreviewGallery: React.FC<PreviewGalleryProps> = ({
-    activePhotoIndex, photos
-}) => (
-    <div>Preview Gallery</div>
-)
+    activePhotoIndex, photos, className
+}) => {
+    if (!photos.length) {
+        return null;
+    }
+
+    const previewContainer = useRef<HTMLUListElement>(null);
+
+    useEffect(() => {
+        if(!previewContainer.current) {
+            return;
+        }
+
+        previewContainer.current.style.transform = `translate3d(-${activePhotoIndex * 164}px, 0, 0)`;
+
+    }, [activePhotoIndex])
+
+    return (
+    <div className={cl(className, style.previewGallery)}>
+        {useMemo(() => (
+        <ul 
+        className={style.previewGalleryTrack} 
+        ref={previewContainer}
+        >
+            {photos.map((photo) => (
+                <li
+                key={photo.id}
+                className={style.previewGalleryPreview}
+                >
+                    <img
+                    src={photo.preview}
+                    alt={photo.description}
+                    className={style.previewGalleryImage}
+                    />
+                </li>
+            ))}
+        </ul>
+), [])}
+        <div className={style.previewGalleryCover}>
+            {activePhotoIndex + 1} / {photos.length}
+        </div>
+    </div>
+    )
+}
