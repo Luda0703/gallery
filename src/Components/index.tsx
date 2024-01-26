@@ -2,7 +2,7 @@ import { Photo } from "./types";
 
 import style from "./index.module.scss";
 import { useState } from "react";
-import { MainPhoto } from "./MainPhoto";
+import { TransitionPhoto } from "./TransitionPhoto";
 import { PreviewGallery } from "./PreviewGallery";
 import { Navigation } from "./Navigation";
 
@@ -16,18 +16,15 @@ export const WebGallery: React.FC<WebGalleryProps> = ({ photos }) => {
   }
 
   const [indexActivePhoto, setIndexActivePhoto] = useState(0);
-  const activePhoto = photos[indexActivePhoto];
   const prevPhoto = photos[indexActivePhoto - 1];
   const nextPhoto = photos[indexActivePhoto + 1];
 
   return (
     <div className={style.webelartGallery}>
       <div className={style.webelartGalleryContainer}>
-        <MainPhoto
-          prevPhoto={prevPhoto}
-          activePhoto={activePhoto}
-          nextPhoto={nextPhoto}
-          className={style.webelartMainPhoto}
+        <TransitionPhoto
+          photos={photos}
+          indexActivePhoto={indexActivePhoto}
         />
         <Navigation
           className={style.webelartGalleryNavigation}
@@ -45,6 +42,7 @@ export const WebGallery: React.FC<WebGalleryProps> = ({ photos }) => {
         activePhotoIndex={indexActivePhoto}
         photos={photos}
         className={style.webelartGalleryPreviewList}
+        setNewPhoto={setIndexActivePhoto}
       />
     </div>
   );
